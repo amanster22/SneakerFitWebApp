@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Step - Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #6A0DAD;
+            color: #FFFFFF;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            margin-top: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #FFFFFF;
+            font-size: 18px;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Aura Step</h1>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="generate.html">Generate</a></li>
+                <li><a href="rate.html">Rate</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <body>
+
+        <!-- <div class="main-container" id="main-container"> -->
+            <div class="controls-container" id="controls-container">
+                <div class="image-box" id="generated-shoe">
+                    <span>Shoe</span>
+                </div>
+
+                <div class="search-container">
+                    <input type="text" class="search-input" id="shoe-input"
+                        placeholder="Search a shoe to get started...">
+                </div>
+
+                <button class="shoe-button" onclick="searchShoe()">Search Shoe</button>
+
+                <button class="gen-outfit-button" id="gen-outfit-button" onclick="generateOutfit()">Generate
+                    Outfit</button>
+            </div>
+
+            <div class="outfit-container" id="outfit-container">
+                <div class="image-box" id="top-outfit">
+                    <span>Top Outfit</span>
+                </div>
+
+                <div class="image-box" id="bottom-outfit">
+                    <span>Bottom Outfit</span>
+                </div>
+
+                <div class="image-box" id="shoe">
+                    <span>Shoe</span>
+                </div>
+
+                <div class="star-rating">
+                    <button class="star" onclick="rateStar(1)">★</button>
+                    <button class="star" onclick="rateStar(2)">★</button>
+                    <button class="star" onclick="rateStar(3)">★</button>
+                    <button class="star" onclick="rateStar(4)">★</button>
+                    <button class="star" onclick="rateStar(5)">★</button>
+                </div>
+            </div>
+        <!-- </div> -->
+    </body>
+</body>
+<style>
+    .main-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 300px;
+        position: relative;
+
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #007BFF;
+    }
+
+    .outfit-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.5s;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .image-box {
+        width: 150px;
+        height: 150px;
+        border: 2px solid #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+    .image-box img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .controls-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 50%; /* Place it 50% down from the top */
+    left: 50%; /* Place it 50% from the left */
+    transform: translate(-50%, -50%); /* Center it precisely */
+    /* transition: transform 0.5s; */
+    border-radius: 10px;
+    padding: 20px;
+    justify-content: center;
+ 
+    
+}
+
+
+    .search-container {
+        margin-bottom: 20px;
+    }
+
+    .search-input {
+        padding: 10px;
+        font-size: 1rem;
+        border: 2px solid #ccc;
+        border-radius: 20px;
+        width: 200px;
+        outline: none;
+    }
+
+    .shoe-button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        margin-bottom: 20px;
+        cursor: pointer;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        outline: none;
+    }
+
+    .shoe-button:hover {
+        background-color: #6b04c0;
+    }
+
+    .gen-outfit-button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        margin-bottom: 20px;
+        cursor: pointer;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        outline: none;
+        display: none;
+        /* Initially hidden */
+    }
+
+    .gen-outfit-button:hover {
+        background-color: #6b04c0;
+    }
+
+    .star-rating {
+        display: flex;
+        margin-top: 20px;
+    }
+
+    .star {
+        font-size: 2rem;
+        color: #d3d3d3;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+    .star:hover,
+    .star:hover~.star {
+        color: #ffcc00;
+    }
+
+    .star.selected {
+        color: #ffcc00;
+    }
+    .outfit-container {
+        display: none;
+    }
+</style>
+
+<body>
+
+
+    <script>
+        function rateStar(rating) {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('selected');
+                } else {
+                    star.classList.remove('selected');
+                }
+            });
+        }
+
+        function searchShoe() {
+            const controlsContainer = document.getElementById('controls-container');
+            const shoeInput = document.getElementById('shoe-input').value;
+
+            
+
+            // Placeholder logic for setting images (replace with actual image URLs)
+            const generatedShoe = document.getElementById('generated-shoe');
+            generatedShoe.innerHTML = `<img src="https://via.placeholder.com/150" alt="${shoeInput}">`;
+
+            // After setting the shoe image, search for the shoe and print the top image URL
+            fetchShoeImage(shoeInput);
+        }
+
+        function fetchShoeImage(shoeQuery) {
+            const cx = 'e66a4ca30aca0451d'; // Replace with your Search Engine ID
+            const apiKey = 'AIzaSyDSRX_tEjHkYg1h_lSt-kc04oLN4Yy3NGU'; // Replace with your API key
+            const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(shoeQuery)}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Process the search results here
+                    console.log(data);
+                    processSearchResults(data);
+                })
+                .catch(error => console.error('Error fetching search results:', error));
+        }
+
+        function processSearchResults(data) {
+            const items = data.items;
+            if (items && items.length > 0) {
+                const imageUrl = items[0].pagemap.cse_image[0].src; // Extracting image URL from the search results
+                console.log('Image URL:', imageUrl); // Print the image URL to the console
+                updateShoeImage(imageUrl);
+            } else {
+                console.error('No search results found');
+            }
+        }
+
+        function updateShoeImage(imageUrl) {
+            const generatedShoe = document.getElementById('generated-shoe');
+            const genOutfitButton = document.getElementById('gen-outfit-button');
+            if (imageUrl) {
+                // Clear any existing content and add the new image
+                generatedShoe.innerHTML = `<img src="${imageUrl}" alt="Shoe Image">`;
+                genOutfitButton.style.display = 'block'; // Show the Generate Outfit button
+            } else {
+                generatedShoe.innerHTML = 'No image found';
+                genOutfitButton.style.display = 'none'; // Hide the Generate Outfit button
+            }
+        }
+
+        function generateOutfit() {
+            const outfitContainer = document.getElementById('outfit-container');
+            const controlsContainer = document.getElementById('controls-container');
+            // Show the outfit container when "Generate Outfit" button is pressed
+            outfitContainer.style.display = 'flex';
+            controlsContainer.style.display = 'none'
+
+            // // Slide the controls container down
+            // controlsContainer.style.transform = 'translateY(0)';
+            // controlsContainer.style.opacity = '1';
+
+        }
+    </script>
+</body>
+
+</html>
