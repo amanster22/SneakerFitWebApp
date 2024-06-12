@@ -10,6 +10,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            
         }
 
         header {
@@ -53,7 +54,149 @@
         .section {
             margin-bottom: 20px;
         }
-        
+
+        .main-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 300px;
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #007BFF;
+        }
+
+        .outfit-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.5s;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .image-box {
+            width: 150px;
+            height: 150px;
+            border: 2px solid #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .image-box img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .controls-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+            padding: 20px;
+            justify-content: center;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 20px;
+            width: 200px;
+            outline: none;
+        }
+
+        .shoe-button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .shoe-button:hover {
+            background-color: #6b04c0;
+        }
+
+        .gen-outfit-button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+            display: none;
+        }
+
+        .gen-outfit-button:hover {
+            background-color: #6b04c0;
+        }
+
+        .slider-container {
+            margin-top: 20px;
+        }
+
+        .slider {
+            width: 100%;
+        }
+
+        .rating-display {
+            margin-top: 10px;
+            font-size: 1.5rem;
+            color: #007BFF;
+        }
+
+        .confirm-button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            outline: none;
+            margin-top: 20px;
+        }
+
+        .confirm-button:hover {
+            background-color: #6b04c0;
+        }
+
+        .outfit-container {
+            display: none;
+        }
+
+        .rating-container {
+            display: none;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 
@@ -70,201 +213,50 @@
         </nav>
     </header>
 
-    <body>
+    <div class="controls-container" id="controls-container">
+        <div class="image-box" id="generated-shoe">
+            <span>Shoe</span>
+        </div>
 
-        <!-- <div class="main-container" id="main-container"> -->
-            <div class="controls-container" id="controls-container">
-                <div class="image-box" id="generated-shoe">
-                    <span>Shoe</span>
-                </div>
+        <div class="search-container">
+            <input type="text" class="search-input" id="shoe-input" placeholder="Search a shoe to get started...">
+        </div>
 
-                <div class="search-container">
-                    <input type="text" class="search-input" id="shoe-input"
-                        placeholder="Search a shoe to get started...">
-                </div>
+        <button class="shoe-button" onclick="searchShoe()">Search Shoe</button>
 
-                <button class="shoe-button" onclick="searchShoe()">Search Shoe</button>
+        <button class="gen-outfit-button" id="gen-outfit-button" onclick="generateOutfit()">Generate Outfit</button>
+    </div>
 
-                <button class="gen-outfit-button" id="gen-outfit-button" onclick="generateOutfit()">Generate
-                    Outfit</button>
-            </div>
+    <div class="outfit-container" id="outfit-container">
+        <div class="image-box" id="top-outfit">
+            <span>Top Outfit</span>
+        </div>
 
-            <div class="outfit-container" id="outfit-container">
-                <div class="image-box" id="top-outfit">
-                    <span>Top Outfit</span>
-                </div>
+        <div class="image-box" id="bottom-outfit">
+            <span>Bottom Outfit</span>
+        </div>
 
-                <div class="image-box" id="bottom-outfit">
-                    <span>Bottom Outfit</span>
-                </div>
+        <div class="image-box" id="shoe">
+            <span>Shoe</span>
+        </div>
 
-                <div class="image-box" id="shoe">
-                    <span>Shoe</span>
-                </div>
+        <div class="slider-container">
+            <input type="range" min="0" max="4" value="2" class="slider" id="rating-slider" oninput="updateRating(this.value)">
+        </div>
+        <div class="rating-display" id="rating-display">C</div>
+        <button class="confirm-button" onclick="confirmRating()">Confirm Rating</button>
+    </div>
 
-                <div class="star-rating">
-                    <button class="star" onclick="rateStar(1)">★</button>
-                    <button class="star" onclick="rateStar(2)">★</button>
-                    <button class="star" onclick="rateStar(3)">★</button>
-                    <button class="star" onclick="rateStar(4)">★</button>
-                    <button class="star" onclick="rateStar(5)">★</button>
-                </div>
-            </div>
-        <!-- </div> -->
-    </body>
-</body>
-<style>
-    .main-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        width: 300px;
-        position: relative;
-
-        margin-left: auto;
-        margin-right: auto;
-        background-color: #007BFF;
-    }
-
-    .outfit-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        transition: transform 0.5s;
-        background-color: #fff;
-        border-radius: 10px;
-        padding: 20px;
-    }
-
-    .image-box {
-        width: 150px;
-        height: 150px;
-        border: 2px solid #ccc;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #fff;
-        border-radius: 10px;
-        overflow: hidden;
-        margin-bottom: 20px;
-    }
-
-    .image-box img {
-        max-width: 100%;
-        max-height: 100%;
-    }
-
-    .controls-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    top: 50%; /* Place it 50% down from the top */
-    left: 50%; /* Place it 50% from the left */
-    transform: translate(-50%, -50%); /* Center it precisely */
-    /* transition: transform 0.5s; */
-    border-radius: 10px;
-    padding: 20px;
-    justify-content: center;
- 
-    
-}
-
-
-    .search-container {
-        margin-bottom: 20px;
-    }
-
-    .search-input {
-        padding: 10px;
-        font-size: 1rem;
-        border: 2px solid #ccc;
-        border-radius: 20px;
-        width: 200px;
-        outline: none;
-    }
-
-    .shoe-button {
-        padding: 10px 20px;
-        font-size: 1rem;
-        margin-bottom: 20px;
-        cursor: pointer;
-        background-color: #007BFF;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        outline: none;
-    }
-
-    .shoe-button:hover {
-        background-color: #6b04c0;
-    }
-
-    .gen-outfit-button {
-        padding: 10px 20px;
-        font-size: 1rem;
-        margin-bottom: 20px;
-        cursor: pointer;
-        background-color: #007BFF;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        outline: none;
-        display: none;
-        /* Initially hidden */
-    }
-
-    .gen-outfit-button:hover {
-        background-color: #6b04c0;
-    }
-
-    .star-rating {
-        display: flex;
-        margin-top: 20px;
-    }
-
-    .star {
-        font-size: 2rem;
-        color: #d3d3d3;
-        background: none;
-        border: none;
-        cursor: pointer;
-        transition: color 0.3s;
-    }
-
-    .star:hover,
-    .star:hover~.star {
-        color: #ffcc00;
-    }
-
-    .star.selected {
-        color: #ffcc00;
-    }
-    .outfit-container {
-        display: none;
-    }
-</style>
-
-<body>
-
+    <!-- <div class="rating-container" id="rating-container">
+        <span>Current Rating: </span>
+    </div> -->
 
     <script>
-        function rateStar(rating) {
-            const stars = document.querySelectorAll('.star');
-            stars.forEach((star, index) => {
-                if (index < rating) {
-                    star.classList.add('selected');
-                } else {
-                    star.classList.remove('selected');
-                }
-            });
-        }
+        const grades = ["A", "B", "C", "D", "F"];
 
         function searchShoe() {
             const controlsContainer = document.getElementById('controls-container');
             const shoeInput = document.getElementById('shoe-input').value;
-
-            
 
             // Placeholder logic for setting images (replace with actual image URLs)
             const generatedShoe = document.getElementById('generated-shoe');
@@ -316,14 +308,26 @@
         function generateOutfit() {
             const outfitContainer = document.getElementById('outfit-container');
             const controlsContainer = document.getElementById('controls-container');
-            // Show the outfit container when "Generate Outfit" button is pressed
+            // Show the outfit container when "Generate Outfit" button is pressed and hide controlsContainter
             outfitContainer.style.display = 'flex';
-            controlsContainer.style.display = 'none'
+            controlsContainer.style.display = 'none';
+        }
 
-            // // Slide the controls container down
-            // controlsContainer.style.transform = 'translateY(0)';
-            // controlsContainer.style.opacity = '1';
+        function updateRating(value) {
+            const ratingDisplay = document.getElementById('rating-display');
+            ratingDisplay.textContent = grades[value];
+        }
 
+        function confirmRating() {
+            const slider = document.getElementById('rating-slider');
+            const rating = grades[slider.value];
+            saveRating(rating);
+        }
+
+        function saveRating(rating) {
+            const ratingContainer = document.getElementById('rating-container');
+            ratingContainer.innerHTML = `<span>Current Rating: ${rating}</span>`;
+            ratingContainer.style.display = 'block'; // Make sure the rating container is visible
         }
     </script>
 </body>
